@@ -1,64 +1,26 @@
 #include <Arduino.h>
-#include <SPI.h>
-#include <SD.h>
+#include <TFT_eSPI.h>
 
-const int CS_PIN = 8;
+// Khởi tạo đối tượng tft từ thư viện
+TFT_eSPI tft = TFT_eSPI();
 
-void setup()
-{
+void setup() {
   Serial.begin(115200);
-  delay(1000);
-  unsigned long start = millis();
-  while (!Serial && millis() - start < 2000)
-  {
-    delay(1);
-  }
+  delay(300);
 
-  Serial.println("\nInitializing SD card...");
+  Serial.println("Start init TFT!!!");
+  tft.init();
+  Serial.println("Init TFT OK!!!");
 
-  SPI.begin();
-
-  if (!SD.begin(CS_PIN))
-  {
-    Serial.println("Card Mount Failed");
-    return;
-  }
-  Serial.println("SD card initialized.");
-
-  File root = SD.open("/");
-  if (root)
-  {
-    Serial.println("Files in root directory:");
-    while (true)
-    {
-      File entry = root.openNextFile();
-      if (!entry)
-      {
-        break;
-      }
-      Serial.print("  ");
-      Serial.print(entry.name());
-      if (entry.isDirectory())
-      {
-        Serial.println("/");
-      }
-      else
-      {
-        Serial.print("\t\t");
-        Serial.println(entry.size(), DEC);
-      }
-      entry.close();
-    }
-    root.close();
-  }
-  else
-  {
-    Serial.println("error opening root directory");
-  }
+  tft.setRotation(0);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_GREEN);
+  tft.setTextSize(2);
+  tft.setCursor(0, 0);
+  tft.println("Hello World!");
 }
 
-void loop()
-{
-  Serial.println("Test!!!!");
+void loop() {
+  Serial.println("Looping...");
   delay(1000);
 }
