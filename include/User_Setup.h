@@ -1,6 +1,7 @@
 // Driver and panel size
 #define ST7789_DRIVER
 #define ESP32_C3_DMA_ERROR_WORKAROUND
+#define TFT_RGB_ORDER TFT_RGB 
 
 #define TFT_WIDTH 240
 #define TFT_HEIGHT 240
@@ -8,7 +9,7 @@
 // Pin mapping (verified working with color fills)
 #define TFT_MOSI 6
 #define TFT_SCLK 4
-#define TFT_CS   -1
+#define TFT_CS   8
 
 #define TFT_DC   2
 #define TFT_RST  1
